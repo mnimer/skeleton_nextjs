@@ -11,14 +11,15 @@ interface Props {
 
 export default function AuthForm({ session }: Props) {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleEmailSignIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevent form submission from refreshing the page
-    await signIn('email', { email, callbackUrl: '/protected' });
+    //todo login with Firebase
   };
 
   const handleGoogleSignIn = async () => {
-    await signIn('google', { callbackUrl: '/protected' });
+    await signIn('google', { callbackUrl: '/dashboard' });
   };
 
   const handleSignOut = async () => {
@@ -29,14 +30,8 @@ export default function AuthForm({ session }: Props) {
     <div className="p-4 mx-auto rounded-md w-[22rem] h-[30rem] shadow-lg">
       {!session && (
         <>
-          <img
-            src="/logo.png"
-            alt="auth.js logo"
-            className="block w-14 mx-auto"
-          />
-          <h1 className="mt-5 text-center">Welcome</h1>
           <p className="mt-4 text-center">
-            Log in to continue to Next Auth Example
+            Log in to continue
           </p>
           <form onSubmit={handleEmailSignIn} className="mt-4">
             <input
@@ -47,8 +42,19 @@ export default function AuthForm({ session }: Props) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full"
+              disabled={true}
             />
-            <button className="bg-emerald-600 text-white mt-4 w-full">
+            <input
+              required
+              name="password"
+              type="password"
+              placeholder="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full" 
+              disabled={true}
+            />
+            <button className="bg-gray-400 text-white mt-4 w-full" disabled={true}>
               Continue
             </button>
           </form>
@@ -61,7 +67,7 @@ export default function AuthForm({ session }: Props) {
 
           <button onClick={handleGoogleSignIn} className="w-full mt-4">
             <GoogleIcon />
-            Continue with Google
+            Login with Google
           </button>
         </>
       )}

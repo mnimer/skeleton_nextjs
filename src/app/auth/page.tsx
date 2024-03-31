@@ -1,4 +1,4 @@
-import AuthForm from '@/components/Authform';
+import AuthForm from '@/components/auth/Authform';
 import { auth } from '../api/auth/[...nextauth]/auth';
 
 export default async function Page() {
