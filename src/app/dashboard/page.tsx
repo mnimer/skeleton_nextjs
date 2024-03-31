@@ -1,5 +1,13 @@
 
+//import {getServerSession} from "next-auth";
+
+import { auth } from "../api/auth/[...nextauth]/auth";
+
 export default function Page() {
+  const session = auth();
+  //console.log(session.user);
+
+
     return (
       <main>
         <h1>dashboard</h1>

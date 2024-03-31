@@ -2,15 +2,38 @@
 import { FirestoreAdapter } from '@auth/firebase-adapter';
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-import {adminDb} from '../../../../../firebase-admin';
+import {adminAuth, adminDb} from '../../../../../firebase-admin';
 
 export const {
   handlers: { GET, POST },
   auth,
 } = NextAuth({
-  providers: [Google],
+  providers: [Google({
+    clientId: process.env.AUTH_GOOGLE_CLIENT_ID,
+    clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
+    allowDangerousEmailAccountLinking: true,
+  })],
   session: {
     strategy: 'jwt'
+  },
+  callbacks:{
+    session: async ({session, token}) => {
+      if(session?.user){
+        if( token.sub ){
+          session.user.id = token.sub;
+
+          const firebaseToken = await adminAuth.createCustomToken(token.sub);
+          session.firebaseToken = firebaseToken;
+        }
+      }
+      return session;
+    },
+    jwt: async ({user, token}) => {
+      if(user){
+        token.sub = user.id;
+      }
+      return token;
+    },
   },
   adapter: FirestoreAdapter(adminDb),
   pages: {

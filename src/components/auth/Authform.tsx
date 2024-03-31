@@ -27,44 +27,9 @@ export default function AuthForm({ session }: Props) {
   };
 
   return (
-    <div className="p-4 mx-auto rounded-md w-[22rem] h-[30rem] shadow-lg">
+    <div className="p-4 mx-auto rounded-md w-[22rem] h-[7rem] shadow-lg">
       {!session && (
         <>
-          <p className="mt-4 text-center">
-            Log in to continue
-          </p>
-          <form onSubmit={handleEmailSignIn} className="mt-4">
-            <input
-              required
-              name="email"
-              type="email"
-              placeholder="example@gmail.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full"
-              disabled={true}
-            />
-            <input
-              required
-              name="password"
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full" 
-              disabled={true}
-            />
-            <button className="bg-gray-400 text-white mt-4 w-full" disabled={true}>
-              Continue
-            </button>
-          </form>
-
-          <div className="flex mt-6 gap-2 items-center [&>div]:h-[1px] [&>div]:bg-black [&>div]:flex-1">
-            <div />
-            <span className="text-xs leading-4">OR</span>
-            <div />
-          </div>
-
           <button onClick={handleGoogleSignIn} className="w-full mt-4">
             <GoogleIcon />
             Login with Google
