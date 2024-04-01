@@ -5,9 +5,15 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import FirebaseAuthProvider from "@/components/auth/FirebaseAuthProvider";
 import { SessionProvider } from "next-auth/react";
+import { Inter as FontSans } from "next/font/google"
+import { cn } from "@/lib/utils"
+ 
 
-const inter = Inter({ subsets: ["latin"] });
 
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 export default function RootLayout({
   children,
@@ -16,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}>
         <SessionProvider>
           <FirebaseAuthProvider>
             {children}
