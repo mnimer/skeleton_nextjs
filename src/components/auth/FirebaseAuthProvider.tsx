@@ -5,11 +5,12 @@ import { signInWithCustomToken, getAuth } from "firebase/auth";
 import { Session } from "next-auth";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
-
+import {app, auth, db, functions} from '../../../firebase';
 
 async function syncFirebaseAuth(session: Session) {
     if( session && session.firebaseToken ){
      try{
+        var firebaseApp  = app;
          await signInWithCustomToken(getAuth(), session.firebaseToken);
      }catch(error){
          console.error(error);
@@ -25,7 +26,7 @@ function FirebaseAuthProvider({
     children: React.ReactNode;
   }) {
     const {data: session} = useSession();
-
+    
     useEffect(() => {
         if( !session ) return;
 

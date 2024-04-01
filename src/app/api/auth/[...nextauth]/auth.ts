@@ -4,13 +4,15 @@ import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import {adminAuth, adminDb} from '../../../../../firebase-admin';
 
+//export const { handlers, auth } = NextAuth({ providers: [ Google ] })
+
 export const {
   handlers: { GET, POST },
   auth,
 } = NextAuth({
   providers: [Google({
-    clientId: process.env.AUTH_GOOGLE_CLIENT_ID,
-    clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
+    clientId: process.env.AUTH_GOOGLE_ID!,
+    clientSecret: process.env.AUTH_GOOGLE_SECRET!,
     allowDangerousEmailAccountLinking: true,
   })],
   session: {
